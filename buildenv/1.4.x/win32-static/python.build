@@ -5,13 +5,13 @@
 # <http://mumble.info/mumble-releng/LICENSE>.
 
 urls=(
-	"http://releng-distfiles.mumble.info/releng-distfiles/python-3.4.3.msi"
-	"https://www.python.org/ftp/python/3.4.3/python-3.4.3.msi"
+	"http://releng-distfiles.mumble.info/releng-distfiles/python-3.7.2.exe"
+	"https://www.python.org/ftp/python/3.7.2/python-3.7.2.exe"
 )
 
 digests=(
-	"sha1:026145533de07346f2f523b9415d3f69d3d78b59"
-	"sha256:33040c16b4bdc5d6da4fe53cecd48c9f2ce3183921be5ab60527edd12b4177eb"
+	"sha1:3f87cf0f8905d5cef118a35a0ac8c88721e59bba"
+	"sha256:8bace330fb409e428b04eeee083dd9ca7f6c754366d07e23b3853891d8f8c3d0"
 )
 
 function extract {
@@ -23,12 +23,8 @@ function build {
 }
 
 function install {
-	cmd /c start /wait msiexec.exe /quiet /a python-3.4.3.msi /l*v python.log TARGETDIR=$(cygpath -w $MUMBLE_PREFIX\\python)
+	chmod u+x python-3.7.2.exe
+	cmd /c python-3.7.2.exe /quiet /log python.log TargetDir=$(cygpath -w $MUMBLE_PREFIX\\python) InstallAllUsers=1 AssociateFiles=0 Shortcuts=0 Include_doc=0 Include_launcher=0
 
-	# Check the UTF-16 python.log file for the string "Installation completed successfully".
-	# If grep doesn't find anything, it will exit with a non-zero exit code and bash will
-	# cause this build recipe to fail.
-	cmd.exe /c type python.log | grep --quiet "Installation completed successfully"
-
-	rm -f $MUMBLE_PREFIX\\python\\python-3.4.3.msi
+	rm -f $MUMBLE_PREFIX\\python\\python-3.7.2.exe
 }
