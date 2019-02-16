@@ -22,6 +22,7 @@ function extract {
 
 function prepare {
 	patch -p1 < ${MUMBLE_BUILDENV_ROOT}/patches/mDNSResponder-625.60.4-fix-MSVC2010-build.patch
+	patch --binary -p1 < ${MUMBLE_BUILDENV_ROOT}/patches/bonjour-win10sdk.patch
 
 	cd mDNSWindows
 
