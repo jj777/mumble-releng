@@ -21,6 +21,8 @@ function extract {
 }
 
 function prepare {
+	patch --binary -p1 < ${MUMBLE_BUILDENV_ROOT}/patches/libflac-win10sdk.patch
+
 	cp -R ${MUMBLE_SNDFILE_PREFIX}/include/ogg include/ogg
 
 	cd src/share/utf8
